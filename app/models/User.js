@@ -2,6 +2,7 @@ import axios from "axios";
 import { AxiosError } from "axios";
 import IncorrectLoginError from "../errors/IncorrectLoginError";
 import IncorrectTokenError from "../errors/IncorrectTokenError";
+import {apiUrl} from "@env";
 export default class User {
   token;
   name;
@@ -18,7 +19,7 @@ export default class User {
     let result;
     let form = { username: email, password: password };
     await axios
-      .post("https://mockapi.mycpnv.ch/api/rfc" + "/mytoken", form)
+      .post(apiUrl + "/mytoken", form)
       .then(async(response) => {
         if (response.status == 200) {
           User.currentUser = null;
@@ -51,7 +52,7 @@ export default class User {
     if (User.currentUser == null || User.currentUser.token != token) {
       let user = undefined;
       return await axios
-        .get("https://mockapi.mycpnv.ch/api/rfc" + "/me", {
+        .get(apiUrl + "/me", {
           headers: {
             authorization: "Bearer " + token,
             accept: "application/json",
