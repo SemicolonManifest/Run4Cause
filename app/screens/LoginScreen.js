@@ -11,11 +11,15 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 
+import User from '../models/User'
+import IncorrectLoginError from "../errors/IncorrectLoginError"
+import IncorrectTokenError from '../errors/IncorrectTokenError'
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
     if (emailError || passwordError) {
@@ -23,10 +27,26 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
+
+    
+    
+    try{
+    await User.authenticate(email.value, password.value)
+    localStorage.setItem('userToken', User.currentUser.token)
+    localStorage.setItem('currentUser', JSON.stringify(User.currentUser))
+    navigation.navigate('Dashboard')
+    }catch(error){
+      if(error instanceof IncorrectLoginError){
+        setEmail({ ...email, error: error.message })
+        setPassword({ ...password, error: error.message })
+        return
+      }else if(error instanceof Error){
+        setEmail({ ...email, error: error.message })
+        setPassword({ ...password, error: error.message })
+        return
+      }
+    }
+
   }
 
   return (
