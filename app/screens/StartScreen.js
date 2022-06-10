@@ -38,6 +38,7 @@ export default function StartScreen({ navigation }) {
           Connexion
         </Button>
         <Button
+          disabled={true}
           mode="outlined"
           onPress={() => navigation.navigate("RegisterScreen")}
         >
