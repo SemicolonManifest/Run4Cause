@@ -16,8 +16,8 @@ export default function NavBar(props) {
         setIsOpen((prevState) => !prevState)
     }
     const navigation = props.navigation
-    const navigateToDashboard = () => {
-        //navigation.navigate("LoginScreen")
+    const navigateTo = (target) => {
+        navigation.navigate(target)
     }
 
     const onSwipe = (gestureName, gestureState) => {
@@ -42,8 +42,9 @@ export default function NavBar(props) {
                 <Pressable onPress={toggleDrawer}>
                     <FontAwesomeIcon icon={faXmark} size={30} color={theme.colors.text} onPress={toggleDrawer} />
                 </Pressable>
-                <Button mode="contained" onClick={navigateToDashboard} style={styles.navButton}>Dashboard</Button>
-                <Button mode="contained" onClick={toggleDrawer}>Close</Button>
+                
+                <Button mode="contained" style={styles.navButton} onPress={() => navigateTo("Dashboard")}>Dashboard</Button>
+                
             </Drawer>
             <GestureRecognizer onSwipe={onSwipe} style={styles.childrenView}>
             
@@ -57,7 +58,8 @@ export default function NavBar(props) {
 const styles = StyleSheet.create({
     navButton: {
         borderRadius: 0,
-        width: '90%',
+        width: '80%',
+        margin: '10%',
     },
     navbar: {
         paddingLeft: 10,
