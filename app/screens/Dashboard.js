@@ -6,6 +6,7 @@ import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
 import User from '../models/User'
 import NavBar from '../components/NavBar'
+import { StyleSheet, View } from 'react-native'
 
 export default function Dashboard({ navigation }) {
   User.currentUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -13,6 +14,7 @@ export default function Dashboard({ navigation }) {
   return (
     <NavBar navigation={navigation}>
       <Background>
+        <View style={styles.container}>
         <Logo />
         <Header>Let’s start</Header>
         <Paragraph>
@@ -31,7 +33,16 @@ export default function Dashboard({ navigation }) {
         >
           Logout
         </Button>
+        </View>
       </Background>
     </NavBar>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})

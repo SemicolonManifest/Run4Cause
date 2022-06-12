@@ -27,8 +27,5 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '100%',
     maxWidth: 340,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 })
