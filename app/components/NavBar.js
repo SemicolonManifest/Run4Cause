@@ -18,6 +18,7 @@ export default function NavBar(props) {
     const navigation = props.navigation
     const navigateTo = (target) => {
         navigation.navigate(target)
+        setIsOpen(false)
     }
 
     const onSwipe = (gestureName, gestureState) => {
@@ -44,6 +45,7 @@ export default function NavBar(props) {
                 </Pressable>
                 
                 <Button mode="contained" style={styles.navButton} onPress={() => navigateTo("Dashboard")}>Dashboard</Button>
+                <Button mode="contained" style={styles.navButton} onPress={() => navigateTo("Settings")}>Settings</Button>
                 
             </Drawer>
             <GestureRecognizer onSwipe={onSwipe} style={styles.childrenView}>
