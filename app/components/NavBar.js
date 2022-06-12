@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Text, Pressable } from 'react-native'
 import Button from '../components/Button'
 import Drawer from 'react-modern-drawer'
-import 'react-modern-drawer/dist/index.css'
+import style from 'react-modern-drawer/dist/index.css'
 import { theme } from '../core/theme'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -51,6 +51,7 @@ export default function NavBar(props) {
             <GestureRecognizer onSwipe={onSwipe} style={styles.childrenView}>
             
             {props.children}
+            
             </GestureRecognizer>
             
         </View>

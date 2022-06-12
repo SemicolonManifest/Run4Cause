@@ -35,6 +35,7 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <Background>
+      <View style={styles.container}>
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Create Account</Header>
@@ -80,6 +81,7 @@ export default function RegisterScreen({ navigation }) {
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>
+      </View>
     </Background>
   )
 }
@@ -93,4 +95,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
+  container: {
+    minWidth: '100%',
+    minHeight: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginStart: '5%',
+  }
 })

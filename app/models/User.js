@@ -16,6 +16,7 @@ export default class User {
   }
 
   static async authenticate(email, password) {
+    
     let result;
     let form = { username: email, password: password };
     await axios

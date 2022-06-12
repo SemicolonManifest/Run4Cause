@@ -7,6 +7,7 @@ import Paragraph from "../components/Paragraph";
 import { theme } from "../core/theme";
 import IncorrectTokenError from "../errors/IncorrectTokenError";
 import User from "../models/User";
+import { StyleSheet, View } from 'react-native'
 
 async function checklogin(navigation) {
     if (localStorage.getItem("userToken") != undefined) {
@@ -27,7 +28,9 @@ export default function StartScreen({ navigation }) {
     checklogin(navigation);
 
     return (
+     
       <Background>
+         <View style={styles.container}>
         <Logo />
         <Header>Run4Cause</Header>
         <Paragraph>Courir pour des causes.</Paragraph>
@@ -44,6 +47,20 @@ export default function StartScreen({ navigation }) {
         >
           S'inscrire
         </Button>
+        </View>
       </Background>
+      
     );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    minWidth: '100%',
+    minHeight: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginStart: '5%',
+    
+  }
+})

@@ -51,6 +51,7 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <Background>
+      <View style={styles.container}>
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Welcome back.</Header>
@@ -76,7 +77,7 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
       <View style={styles.forgotPassword}>
-        <TouchableOpacity
+        <TouchableOpacity disabled
           onPress={() => navigation.navigate('ResetPasswordScreen')}
         >
           <Text style={styles.forgot}>Forgot your password?</Text>
@@ -87,9 +88,10 @@ export default function LoginScreen({ navigation }) {
       </Button>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
+        <TouchableOpacity disabled onPress={() => navigation.replace('RegisterScreen')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
+      </View>
       </View>
     </Background>
   )
@@ -113,4 +115,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
+  container: {
+    minWidth: '100%',
+    minHeight: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginStart: '5%',
+    
+  }
 })
