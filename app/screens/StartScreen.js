@@ -8,16 +8,17 @@ import { theme } from "../core/theme";
 import IncorrectTokenError from "../errors/IncorrectTokenError";
 import User from "../models/User";
 import { StyleSheet, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 async function checklogin(navigation) {
-    if (localStorage.getItem("userToken") != undefined) {
+    if (await AsyncStorage.getItem("userToken") != undefined) {
       try {
-        await User.getUser(localStorage.getItem("userToken"));
+        await User.getUser(await AsyncStorage.getItem("userToken"));
         navigation.navigate("Dashboard", { navigation });
       } catch (error) {
         if (error instanceof IncorrectTokenError) {
           console.log("error" + error);
-          localStorage.removeItem("userToken");
+          await AsyncStorage.removeItem("userToken");
         }
       }
   }

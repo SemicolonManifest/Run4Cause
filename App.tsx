@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, AppRegistry } from 'react-native';
 import { Provider } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -11,6 +11,7 @@ import {
   Dashboard,
   Settings
 } from './app/screens'
+import { registerRootComponent } from 'expo';
 
 
 
@@ -41,6 +42,8 @@ export default function App() {
   );
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -52,3 +55,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+AppRegistry.registerComponent('main', ()=> App);

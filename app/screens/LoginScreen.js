@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
@@ -32,8 +33,8 @@ export default function LoginScreen({ navigation }) {
     
     try{
     await User.authenticate(email.value, password.value)
-    localStorage.setItem('userToken', User.currentUser.token)
-    localStorage.setItem('currentUser', JSON.stringify(User.currentUser))
+    await AsyncStorage.setItem('userToken', User.currentUser.token)
+    await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser))
     navigation.navigate('Dashboard')
     }catch(error){
       if(error instanceof IncorrectLoginError){
@@ -55,6 +56,7 @@ export default function LoginScreen({ navigation }) {
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Welcome back.</Header>
+      <View style={styles.form}>
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -66,6 +68,7 @@ export default function LoginScreen({ navigation }) {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
+        style={styles.inputs}
       />
       <TextInput
         label="Password"
@@ -75,6 +78,7 @@ export default function LoginScreen({ navigation }) {
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
+        style={styles.inputs}
       />
       <View style={styles.forgotPassword}>
         <TouchableOpacity disabled
@@ -86,6 +90,7 @@ export default function LoginScreen({ navigation }) {
       <Button mode="contained" onPress={onLoginPressed}>
         Login
       </Button>
+      </View>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity disabled onPress={() => navigation.replace('RegisterScreen')}>
@@ -123,5 +128,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginStart: '5%',
     
+  },
+  form: {
+    width: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  inputs : {
+    minWidth: '80%'
   }
 })

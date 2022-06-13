@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: theme.colors.surface,
+    width: '80%',
   },
   description: {
     fontSize: 13,

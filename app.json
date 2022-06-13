@@ -1,7 +1,7 @@
 {
     "expo": {
-        "name": "Run4Cause",
-        "slug": "Run4Cause",
+        "name": "run4cause",
+        "slug": "r4c",
         "version": "1.0.0",
         "orientation": "portrait",
         "icon": "./app/assets/icon.png",
@@ -28,6 +28,10 @@
         },
         "web": {
             "favicon": "./app/assets/favicon.png"
+        },
+        "react-native": {
+            "./dist/cache.cjs.js": "./dist/cache.cjs.js",
+            "./dist/cache.esm.js": "./dist/cache.esm.js"
         }
     }
 }

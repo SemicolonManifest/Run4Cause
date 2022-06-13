@@ -7,9 +7,9 @@ import Button from '../components/Button'
 import User from '../models/User'
 import NavBar from '../components/NavBar'
 import { StyleSheet, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Dashboard({ navigation }) {
-  User.currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
   return (
     <NavBar navigation={navigation}>
@@ -41,9 +41,13 @@ export default function Dashboard({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginStart: '5%',
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    justifyItems: "center",
+    paddingRight: 10,
+    paddingLeft: 10,
   }
 })
