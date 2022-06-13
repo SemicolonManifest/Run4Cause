@@ -9,7 +9,8 @@ import {
   RegisterScreen,
   ResetPasswordScreen,
   Dashboard,
-  Settings
+  Settings,
+  Location,
 } from './app/screens'
 import { registerRootComponent } from 'expo';
 
@@ -32,6 +33,7 @@ export default function App() {
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Settings" component={Settings} />
+          <Stack.Screen name="Location" component={Location} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

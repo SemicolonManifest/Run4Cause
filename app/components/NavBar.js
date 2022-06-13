@@ -42,6 +42,13 @@ export default function NavBar(props) {
       <Button
         mode="contained"
         style={styles.navButton}
+        onPress={() => navigateTo("Location")}
+      >
+        Location
+      </Button>
+      <Button
+        mode="contained"
+        style={styles.navButton}
         onPress={() => navigateTo("Settings")}
       >
         Settings
