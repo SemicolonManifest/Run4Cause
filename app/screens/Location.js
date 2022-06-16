@@ -7,13 +7,15 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as DeviceLocation from "expo-location";
 import MapView from "react-native-maps";
+import { Marker } from 'react-native-maps';
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
 
 
 
 export default function Location({ navigation }) {
   
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
   const [region, setRegion] = useState(null);
 
   let getUser = async () => {
@@ -27,7 +29,7 @@ export default function Location({ navigation }) {
       setErrorMsg("Permission to access location was denied");
     }
 
-    let { coords } = await DeviceLocation.getCurrentPositionAsync({timeInterval: 5000,distanceInterval: 15});
+    let { coords } = await DeviceLocation.getCurrentPositionAsync({timeInterval: 500,distanceInterval: 15});
 
     setLocation(coords);
 
@@ -44,18 +46,27 @@ export default function Location({ navigation }) {
     }
   }
 
+  let updateLocation = async () => {
+    
+    getLocationAsync();
+    setTimeout(updateLocation, 500);
+
+  }
+
   if(!User.currentUser){
     getUser();
   }
 
   if(!location){
     getLocationAsync();
+    updateLocation();
   }
 
   if(!region){
     initializeRegion();
   }
- 
+  
+
 
 
   return (
@@ -73,19 +84,18 @@ export default function Location({ navigation }) {
           <MapView
             style={styles.map}
             initialRegion={region}
+            showsUserLocation={true}
           >
-            {!location ? null : (<MapView.Marker
-              name="Current Location"
-              coordinate={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-              }}
-            />)}
-            
+      
+            <Marker
+              coordinate={{ latitude: 46.78053487730142, longitude: 6.64026263613881 }}
+              title="Location 1"
+              description="This is the first location"
+            />
             
           </MapView>
           
-
+          
           <Button
             mode="contained"
             style={styles.navButton}
@@ -93,6 +103,7 @@ export default function Location({ navigation }) {
           >
             Update
           </Button>
+          
         </View>
       </Background>
     </NavBar>
@@ -106,5 +117,10 @@ const styles = StyleSheet.create({
   map: {
     width: "100%",
     height: "60%",
-  }
+  },
+  marker: {
+    width: 1,
+    height: '1%',
+    maxHeight: 2,
+  },
 });
