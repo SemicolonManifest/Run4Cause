@@ -6,29 +6,56 @@ import NavBar from "../components/NavBar";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as DeviceLocation from "expo-location";
+import MapView from "react-native-maps";
+
+
 
 export default function Location({ navigation }) {
+  
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [region, setRegion] = useState(null);
 
-  const getUser = async () => {
+  let getUser = async () => {
     let jsonuser = await AsyncStorage.getItem("currentUser");
     User.currentUser = JSON.parse(jsonuser);
   };
 
-  const getLocationAsync = async () => {
+  let getLocationAsync = async () => {
     let { status } = await DeviceLocation.requestForegroundPermissionsAsync();
     if (status !== "granted") {
       setErrorMsg("Permission to access location was denied");
     }
 
-    let { coords } = await DeviceLocation.getCurrentPositionAsync();
+    let { coords } = await DeviceLocation.getCurrentPositionAsync({timeInterval: 5000,distanceInterval: 15});
 
     setLocation(coords);
+
   };
 
-  getUser();
-  getLocationAsync();
+  let initializeRegion = () => {
+    if (location) {
+      setRegion({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    }
+  }
+
+  if(!User.currentUser){
+    getUser();
+  }
+
+  if(!location){
+    getLocationAsync();
+  }
+
+  if(!region){
+    initializeRegion();
+  }
+ 
 
 
   return (
@@ -42,6 +69,23 @@ export default function Location({ navigation }) {
               location.longitude
             }`}</Text>
           </View>
+
+          <MapView
+            style={styles.map}
+            initialRegion={region}
+          >
+            {!location ? null : (<MapView.Marker
+              name="Current Location"
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+            />)}
+            
+            
+          </MapView>
+          
+
           <Button
             mode="contained"
             style={styles.navButton}
@@ -59,4 +103,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
+  map: {
+    width: "100%",
+    height: "60%",
+  }
 });
