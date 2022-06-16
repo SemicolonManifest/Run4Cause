@@ -19,6 +19,12 @@ export default class User {
     
     let result;
     let form = { username: email, password: password };
+
+    // temporary during server crash
+    User.getUser("IFOmywmHfqSpHnPyPBtNAJAiU6x86IZl0uJivX0bh7X6R1LqQPYcB00c21Tf")
+    
+    return true;
+
     await axios
       .post(apiUrl + "/mytoken", form)
       .then(async(response) => {
@@ -50,6 +56,11 @@ export default class User {
   }
 
   static async getUser(token) {
+
+    // temporary during server crash
+    User.currentUser = new User("Theo","theo.gautier@cpnv.ch","IFOmywmHfqSpHnPyPBtNAJAiU6x86IZl0uJivX0bh7X6R1LqQPYcB00c21Tf");
+    return true;
+
     if (User.currentUser == null || User.currentUser.token != token) {
       let user = undefined;
       return await axios
