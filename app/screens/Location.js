@@ -10,6 +10,7 @@ import MapView from "react-native-maps";
 import { Marker } from 'react-native-maps';
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
+import LocationManager from "../models/LocationManager";
 
 
 
@@ -17,6 +18,8 @@ export default function Location({ navigation }) {
   
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState(null);
+  const [message, setMessage] = useState("message");
+  let locationManager = null;
 
   let getUser = async () => {
     let jsonuser = await AsyncStorage.getItem("currentUser");
@@ -53,6 +56,15 @@ export default function Location({ navigation }) {
 
   }
 
+  let submitLocation = async () => {
+    setMessage(User.currentUser.token)
+    try{
+    await locationManager.submitLocation(location.latitude, location.longitude);
+    }catch(error){
+      setMessage(error.message);
+    }
+  }
+
   if(!User.currentUser){
     getUser();
   }
@@ -66,6 +78,11 @@ export default function Location({ navigation }) {
     initializeRegion();
   }
   
+  if(!locationManager){
+    locationManager = new LocationManager(User.currentUser.token);
+  }
+
+
 
 
 
@@ -99,11 +116,11 @@ export default function Location({ navigation }) {
           <Button
             mode="contained"
             style={styles.navButton}
-            onPress={() => getLocationAsync()}
+            onPress={() => submitLocation()}
           >
-            Update
+            Submit location
           </Button>
-          
+          <Text>{message}</Text>
         </View>
       </Background>
     </NavBar>
