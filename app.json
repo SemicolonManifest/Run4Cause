@@ -7,8 +7,8 @@
         "icon": "./app/assets/icon.png",
         "userInterfaceStyle": "light",
         "splash": {
-            "image": "./app/assets/splash-icon.webp",
-            "backgroundColor": "#babbba"
+            "image": "./app/assets/splash-icon.png",
+            "backgroundColor": "#FFFFFF"
         },
         "updates": {
             "fallbackToCacheTimeout": 0
