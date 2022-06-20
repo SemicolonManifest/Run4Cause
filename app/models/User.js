@@ -79,4 +79,38 @@ export default class User {
       return User.currentUser;
     }
   }
+
+  static async update(name, email) {
+    let form = { _method: 'PATCH',name: name, email: email };
+
+    await axios
+      .patch(apiUrl + "/profile", form)
+      .then(async(response) => {
+        if (response.status == 200) {
+          User.currentUser = null;
+          await User.getUser(response.data);
+        } else {
+          throw new Error("Une erreur est survenue");
+        }
+      })
+      .catch((error) => {
+        switch (true) {
+          case error instanceof AxiosError:
+            if (error.response.status == 401) {
+              throw new IncorrectLoginError(
+                "Le login ou le mot de passe est incorrect"
+              );
+            } else {
+              throw new Error("Une erreur est survenue");
+            }
+          case error instanceof IncorrectTokenError:
+            throw error;
+          default:
+            throw new Error("Une erreur est survenue");
+        }
+      });
+
+    return true;
+
+  }
 }
