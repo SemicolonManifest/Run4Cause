@@ -18,7 +18,7 @@ export default function Location({ navigation }) {
   
   const [location, setLocation] = useState(null);
   const [region, setRegion] = useState(null);
-  const [message, setMessage] = useState("message");
+  const [message, setMessage] = useState("");
   let locationManager = null;
 
   let getUser = async () => {
@@ -60,6 +60,7 @@ export default function Location({ navigation }) {
     setMessage(User.currentUser.token)
     try{
     await locationManager.submitLocation(location.latitude, location.longitude);
+    setMessage("Location submitted");
     }catch(error){
       setMessage(error.message);
     }
