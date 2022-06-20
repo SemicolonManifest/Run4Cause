@@ -27,11 +27,14 @@ export default class User {
     await AsyncStorage.removeItem('currentUser').catch(error => alert(error))
     await AsyncStorage.removeItem('userToken').catch(error => alert(error))
     self.currentUser = null;
+    setTimeout(() => {}, 500);
     }catch(error){
       alert(error)
     }
     return true;
   }
+
+
 
   /**
    * Update a user
@@ -53,7 +56,7 @@ export default class User {
         if (response.status == 200) {
           User.currentUser.name = this.name;
           User.currentUser.email = this.email;
-          await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser))
+          await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser.toJSON()))
         } else {
           throw new Error("Une erreur est survenue");
         }
@@ -137,7 +140,7 @@ export default class User {
             user = new User(response.data.name, response.data.email, token);
             User.currentUser = user;
             await AsyncStorage.setItem('userToken', User.currentUser.token)
-            await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser))
+            await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser.toJSON()))
             alert("ici")
           } else {
             throw new Error("Une erreur est survenue");
@@ -177,7 +180,7 @@ export default class User {
     if(User.currentUser != null){
       return User.currentUser;
     }else if(storageUser != null){
-      User.currentUser = JSON.parse(storageUser);
+      User.currentUser = User.fromJSON(JSON.parse(storageUser));
       alert(User.currentUser.token)
       return User.currentUser;
     }else if (storageToken != null) {
@@ -187,4 +190,15 @@ export default class User {
     }
   }
 
+  toJSON() {
+    return {
+      name: this.name,
+      email: this.email,
+      token: this.token,
+    };
+  }
+
+  static fromJSON(json) {
+    return new User(json.name, json.email, json.token);
+  }
 }

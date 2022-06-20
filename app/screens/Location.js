@@ -21,10 +21,10 @@ export default function Location({ navigation }) {
   const [message, setMessage] = useState("");
   let locationManager = null;
 
-  let getUser = async () => {
-    let jsonuser = await AsyncStorage.getItem("currentUser");
-    User.currentUser = JSON.parse(jsonuser);
+  const getUser = async () => {
+    User.currentUser = await User.getCurrentUser();
   };
+  getUser();
 
   let getLocationAsync = async () => {
     let { status } = await DeviceLocation.requestForegroundPermissionsAsync();
