@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, StyleSheet, View } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
@@ -33,15 +32,14 @@ export default function LoginScreen({ navigation }) {
     
     try{
     await User.authenticate(email.value, password.value)
-    await AsyncStorage.setItem('userToken', User.currentUser.token)
-    await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser))
+    
     navigation.navigate('Dashboard')
     }catch(error){
       if(error instanceof IncorrectLoginError){
         setEmail({ ...email, error: error.message })
         setPassword({ ...password, error: error.message })
         return
-      }else if(error instanceof Error){
+      }else{
         setEmail({ ...email, error: error.message })
         setPassword({ ...password, error: error.message })
         return

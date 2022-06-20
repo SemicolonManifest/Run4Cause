@@ -7,10 +7,17 @@ import Button from '../components/Button'
 import User from '../models/User'
 import NavBar from '../components/NavBar'
 import { StyleSheet, View } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Dashboard({ navigation }) {
+  const getUser = async () => {
+    User.currentUser = await User.getCurrentUser();
+  };
+  getUser();
 
+  const onLogoutPressed = async () => {
+    await User.currentUser.logout();
+    navigation.reset({ index: 0, routes: [{ name: 'StartScreen' }] })
+  }
   return (
     <NavBar navigation={navigation}>
       <Background>
@@ -22,14 +29,7 @@ export default function Dashboard({ navigation }) {
         </Paragraph>
         <Button
           mode="outlined"
-          onPress={() =>{
-            AsyncStorage.removeItem("userToken");
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'StartScreen' }],
-            })
-          }
-        }
+          onPress={onLogoutPressed}
         >
           Logout
         </Button>

@@ -8,9 +8,10 @@ import TextInput from "../components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Settings({ navigation }) {
+  const [message, setMessage] = useState("");
+
   const getUser = async () => {
-    let jsonuser = await AsyncStorage.getItem("currentUser");
-    User.currentUser = JSON.parse(jsonuser);
+    User.currentUser = await User.getCurrentUser();
   };
   getUser();
 
@@ -21,7 +22,13 @@ export default function Settings({ navigation }) {
   });
 
   const updateUser = async () => {
-    alert("not implemented yet");
+    try{
+      User.currentUser.name = name.value;
+      User.currentUser.email = email.value;
+      await User.currentUser.update();
+    }catch(error){
+      setMessage(error.message);
+    }
   };
 
   return (
@@ -52,6 +59,7 @@ export default function Settings({ navigation }) {
               textContentType="emailAddress"
               keyboardType="email-address"
             />
+            <Text>{message}</Text>
           </View>
           <Button
             mode="contained"
@@ -60,6 +68,7 @@ export default function Settings({ navigation }) {
           >
             Update
           </Button>
+          <Text>{message}</Text>
         </View>
       </Background>
     </NavBar>

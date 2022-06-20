@@ -57,7 +57,6 @@ export default function Location({ navigation }) {
   }
 
   let submitLocation = async () => {
-    setMessage(User.currentUser.token)
     try{
     await locationManager.submitLocation(location.latitude, location.longitude);
     setMessage("Location submitted");

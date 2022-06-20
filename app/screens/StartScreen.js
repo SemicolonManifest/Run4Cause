@@ -11,7 +11,7 @@ import { StyleSheet, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 async function checklogin(navigation) {
-    if (await AsyncStorage.getItem("userToken") != undefined) {
+    if (await User.getCurrentUser() != null) {
       try {
         await User.getUser(await AsyncStorage.getItem("userToken"));
         navigation.navigate("Dashboard", { navigation });
