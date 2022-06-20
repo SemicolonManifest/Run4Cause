@@ -28,10 +28,6 @@
         },
         "web": {
             "favicon": "./app/assets/favicon.png"
-        },
-        "react-native": {
-            "./dist/cache.cjs.js": "./dist/cache.cjs.js",
-            "./dist/cache.esm.js": "./dist/cache.esm.js"
         }
     }
 }

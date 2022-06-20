@@ -23,7 +23,7 @@ export default function Dashboard({ navigation }) {
         <Button
           mode="outlined"
           onPress={() =>{
-            localStorage.removeItem("userToken");
+            AsyncStorage.removeItem("userToken");
             navigation.reset({
               index: 0,
               routes: [{ name: 'StartScreen' }],

@@ -16,9 +16,8 @@ export default class User {
   }
 
   static async authenticate(email, password) {
-    
-    let result;
     let form = { username: email, password: password };
+
     await axios
       .post(apiUrl + "/mytoken", form)
       .then(async(response) => {
@@ -50,6 +49,7 @@ export default class User {
   }
 
   static async getUser(token) {
+
     if (User.currentUser == null || User.currentUser.token != token) {
       let user = undefined;
       return await axios
