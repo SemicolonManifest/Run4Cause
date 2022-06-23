@@ -14,17 +14,7 @@ export default function Dashboard({ navigation }) {
   };
   getUser();
 
-  const onLogoutPressed = async () => {
-    try{
-      if(User.currentUser != null){
-        await User.currentUser.logout();
-      }
-    navigation.reset({ index: 0, routes: [{ name: 'StartScreen' }] })
-    }catch(error){
-      alert(error);
-    }
-    
-  }
+  
   return (
     <NavBar navigation={navigation}>
       <Background>
@@ -34,12 +24,7 @@ export default function Dashboard({ navigation }) {
         <Paragraph>
           Your amazing app starts here. Open you favorite code editor and start editing this project.
         </Paragraph>
-        <Button
-          mode="outlined"
-          onPress={onLogoutPressed}
-        >
-          Logout
-        </Button>
+        
         </View>
       </Background>
     </NavBar>

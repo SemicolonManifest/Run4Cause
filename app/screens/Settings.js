@@ -26,10 +26,23 @@ export default function Settings({ navigation }) {
       User.currentUser.name = name.value;
       User.currentUser.email = email.value;
       await User.currentUser.update();
+      setMessage("User updated");
     }catch(error){
       setMessage(error.message);
     }
   };
+
+  const onLogoutPressed = async () => {
+    try{
+      if(User.currentUser != null){
+        await User.currentUser.logout();
+      }
+    navigation.reset({ index: 0, routes: [{ name: 'StartScreen' }] })
+    }catch(error){
+      alert(error);
+    }
+    
+  }
 
   return (
     <NavBar navigation={navigation}>
@@ -68,7 +81,12 @@ export default function Settings({ navigation }) {
           >
             Update
           </Button>
-          <Text>{message}</Text>
+          <Button
+          mode="contained"
+          onPress={onLogoutPressed}
+        >
+          Logout
+        </Button>
         </View>
       </Background>
     </NavBar>
