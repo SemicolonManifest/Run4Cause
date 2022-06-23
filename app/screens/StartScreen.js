@@ -11,17 +11,11 @@ import { StyleSheet, View } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 async function checklogin(navigation) {
-    if (await User.getCurrentUser() != null) {
-      try {
-        await User.getUser(await AsyncStorage.getItem("userToken"));
+    User.currentUser = null;
+    if ( await User.getCurrentUser() != null) {
         navigation.navigate("Dashboard", { navigation });
-      } catch (error) {
-        if (error instanceof IncorrectTokenError) {
-          console.log("error" + error);
-          await AsyncStorage.removeItem("userToken");
-        }
       }
-  }
+  
 }
 
 export default function StartScreen({ navigation }) {

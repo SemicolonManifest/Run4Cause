@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import IncorrectLoginError from "../errors/IncorrectLoginError";
 import IncorrectTokenError from "../errors/IncorrectTokenError";
 import {apiUrl} from "@env";
+import GlobalHelper from "../helpers/globalHelper";
 
 
 export default class User {
@@ -24,13 +25,18 @@ export default class User {
    */
   async logout() {
     try{
-    await AsyncStorage.removeItem('currentUser').catch(error => alert(error))
-    await AsyncStorage.removeItem('userToken').catch(error => alert(error))
+      
+      if(await AsyncStorage.getItem('currentUser') != null){
+        await AsyncStorage.removeItem('currentUser')
+      }
+      if(await AsyncStorage.getItem('userToken') != null){
+        await AsyncStorage.removeItem('userToken')
+      }
     self.currentUser = null;
-    setTimeout(() => {}, 500);
     }catch(error){
-      alert(error)
+      console.log(error);
     }
+    //await GlobalHelper.sleep(5000);
     return true;
   }
 
@@ -96,6 +102,7 @@ export default class User {
         }
       })
       .catch((error) => {
+
         switch (true) {
           case error instanceof AxiosError:
             if (error.response.status == 401) {
@@ -141,14 +148,12 @@ export default class User {
             User.currentUser = user;
             await AsyncStorage.setItem('userToken', User.currentUser.token)
             await AsyncStorage.setItem('currentUser', JSON.stringify(User.currentUser.toJSON()))
-            alert("ici")
           } else {
             throw new Error("Une erreur est survenue");
           }
         })
         .catch((error) => {
           if (error.response.status == 401) {
-            alert(User.currentUser.token)
             throw new IncorrectTokenError("Le token est incorrect");
           } else {
             throw new Error("Une erreur est survenue");
@@ -181,7 +186,6 @@ export default class User {
       return User.currentUser;
     }else if(storageUser != null){
       User.currentUser = User.fromJSON(JSON.parse(storageUser));
-      alert(User.currentUser.token)
       return User.currentUser;
     }else if (storageToken != null) {
       return await User.getUser(storageToken);

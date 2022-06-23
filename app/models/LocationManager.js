@@ -28,6 +28,7 @@ export default class LocationManager{
                 }
             })
             .catch((error) => {
+                
                 if (error.response.status == 401) {
                     throw new IncorrectTokenError("Le token est incorrect");
                   } else {

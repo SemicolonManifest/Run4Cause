@@ -15,8 +15,15 @@ export default function Dashboard({ navigation }) {
   getUser();
 
   const onLogoutPressed = async () => {
-    await User.currentUser.logout();
+    try{
+      if(User.currentUser != null){
+        await User.currentUser.logout();
+      }
     navigation.reset({ index: 0, routes: [{ name: 'StartScreen' }] })
+    }catch(error){
+      alert(error);
+    }
+    
   }
   return (
     <NavBar navigation={navigation}>
