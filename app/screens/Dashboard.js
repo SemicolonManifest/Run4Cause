@@ -3,7 +3,6 @@ import Background from '../components/Background'
 import Logo from '../components/Logo'
 import Header from '../components/Header'
 import Paragraph from '../components/Paragraph'
-import Button from '../components/Button'
 import User from '../models/User'
 import NavBar from '../components/NavBar'
 import { StyleSheet, View } from 'react-native'
@@ -13,16 +12,15 @@ export default function Dashboard({ navigation }) {
     User.currentUser = await User.getCurrentUser();
   };
   getUser();
-
   
   return (
     <NavBar navigation={navigation}>
       <Background>
         <View style={styles.container}>
         <Logo />
-        <Header>Let’s start</Header>
+        <Header>Let’s start !</Header>
         <Paragraph>
-          Your amazing app starts here. Open you favorite code editor and start editing this project.
+          Your favorite app is now opened. Start using it ! You can find everything by swiping left or clicking on the top left button to open the menu !
         </Paragraph>
         
         </View>
