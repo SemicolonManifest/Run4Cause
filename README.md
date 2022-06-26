@@ -44,8 +44,6 @@ Run4Cause is a react-native mobile app for a school project
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 * [Expo](https://expo.dev)
 * [React Native](https://reactnative.dev)
 * [npm](https://www.npmjs.com)
