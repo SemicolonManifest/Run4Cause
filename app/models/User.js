@@ -4,7 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import IncorrectLoginError from "../errors/IncorrectLoginError";
 import IncorrectTokenError from "../errors/IncorrectTokenError";
 import {apiUrl} from "@env";
-import GlobalHelper from "../helpers/globalHelper";
 
 
 export default class User {
@@ -36,7 +35,6 @@ export default class User {
     }catch(error){
       console.log(error);
     }
-    //await GlobalHelper.sleep(5000);
     return true;
   }
 
