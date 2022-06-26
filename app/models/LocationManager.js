@@ -13,6 +13,7 @@ export default class LocationManager{
 
     async submitLocation(latitude, longitude){
         let form = { lat: latitude, long: longitude };
+
         await axios
             .post(apiUrl + "/location", form,{
             headers: {
@@ -28,7 +29,6 @@ export default class LocationManager{
                 }
             })
             .catch((error) => {
-                
                 if (error.response.status == 401) {
                     throw new IncorrectTokenError("Le token est incorrect");
                   } else {
